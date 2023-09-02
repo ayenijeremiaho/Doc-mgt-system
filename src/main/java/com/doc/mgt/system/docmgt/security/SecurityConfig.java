@@ -100,7 +100,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(
 
-                Arrays.asList("http://192.68.100.33", "http://127.0.0.1:5500/", "http://127.0.0.1:5173/"));
+                Arrays.asList("http://192.68.100.33", "http://127.0.0.1:5500/", "http://127.0.0.1:5173/", "https://document-management.vercel.app/"));
 
         configuration.setAllowedMethods(Collections.singletonList("*"));
         configuration.setAllowCredentials(true);
