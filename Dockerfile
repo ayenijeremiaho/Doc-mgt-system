@@ -17,7 +17,10 @@ WORKDIR /app
 
 COPY --from=build /home/app/target/dms-service.jar .
 
+ENV JAVA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000
+
+ENV PORT 8080
+
+EXPOSE 8080
+
 ENTRYPOINT ["java", "-jar","dms-service.jar"]
-
-
-
