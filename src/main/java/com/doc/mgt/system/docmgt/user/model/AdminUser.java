@@ -1,5 +1,6 @@
 package com.doc.mgt.system.docmgt.user.model;
 
+import com.doc.mgt.system.docmgt.department.model.Department;
 import com.doc.mgt.system.docmgt.role.dto.RoleDTO;
 import com.doc.mgt.system.docmgt.role.model.Role;
 import com.doc.mgt.system.docmgt.user.dto.AdminUserDTO;
@@ -34,6 +35,9 @@ public class AdminUser {
     @ToString.Exclude
     private Role userRole;
 
+    @OneToOne
+    @ToString.Exclude
+    private Department department;
 
     @Override
     public boolean equals(Object o) {

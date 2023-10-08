@@ -1,5 +1,6 @@
 package com.doc.mgt.system.docmgt.user.dto;
 
+import com.doc.mgt.system.docmgt.department.dto.DepartmentDTO;
 import com.doc.mgt.system.docmgt.role.dto.RoleDTO;
 import lombok.Data;
 
@@ -13,6 +14,8 @@ public class AdminUserDTO {
     private String email;
 
     private RoleDTO role;
+
+    private DepartmentDTO departmentDTO;
 
 //    private String imageUrl;
 //

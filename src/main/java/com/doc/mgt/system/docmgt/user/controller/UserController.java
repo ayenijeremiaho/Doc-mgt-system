@@ -8,6 +8,7 @@ import com.doc.mgt.system.docmgt.user.dto.*;
 import com.doc.mgt.system.docmgt.user.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,7 +28,6 @@ public class UserController {
         this.generalService = generalService;
     }
 
-    //    @PreAuthorize("hasAuthority('CREATE_USER')")
     @PostMapping("sign-up")
     public Response signUp(@Valid @RequestBody CreateUpdateUserDTO signUpRequest) {
 
@@ -51,7 +51,7 @@ public class UserController {
 //        return new ResponseEntity<>("Log out successful", HttpStatus.OK);
 //    }
 
-    //    @PreAuthorize("hasAuthority('CREATE_USER')")
+    @PreAuthorize("hasAuthority('CREATE_USER')")
     @PostMapping("/update/{userId}")
     public Response updateUser(@Valid @RequestBody CreateUpdateUserDTO signUpRequest, @PathVariable Long userId) {
 

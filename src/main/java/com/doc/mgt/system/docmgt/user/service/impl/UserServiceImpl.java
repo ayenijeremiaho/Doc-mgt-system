@@ -1,5 +1,9 @@
 package com.doc.mgt.system.docmgt.user.service.impl;
 
+import com.doc.mgt.system.docmgt.department.dto.DepartmentDTO;
+import com.doc.mgt.system.docmgt.department.model.Department;
+import com.doc.mgt.system.docmgt.department.repository.DepartmentRepository;
+import com.doc.mgt.system.docmgt.department.service.DepartmentService;
 import com.doc.mgt.system.docmgt.exception.GeneralException;
 import com.doc.mgt.system.docmgt.general.dto.Response;
 import com.doc.mgt.system.docmgt.general.enums.ResponseCodeAndMessage;
@@ -56,6 +60,7 @@ public class UserServiceImpl implements UserService {
 
     private final AdminRoleService adminRoleService;
     private final UserRepository adminUserRepository;
+    private final DepartmentService departmentService;
 
 
     @Override
@@ -163,6 +168,7 @@ public class UserServiceImpl implements UserService {
         //get the role
         Role role = getRole(createUserDto.getRoleId());
 
+        Department department = departmentService.getDepartmentById(createUserDto.getDepartmentId());
 
         //create new user
         AdminUser adminUser = new AdminUser();
@@ -171,10 +177,10 @@ public class UserServiceImpl implements UserService {
         adminUser.setEmail(email);
         adminUser.setPassword(passwordEncoder.encode(createUserDto.getPassword()));
         adminUser.setUserRole(role);
+        adminUser.setDepartment(department);
 
         // save to db
         AdminUser savedAdminUser = saveAdminUser(adminUser);
-
 
         String roleName = adminUser.getUserRole().getName();
 
@@ -199,6 +205,9 @@ public class UserServiceImpl implements UserService {
             throw new GeneralException(ResponseCodeAndMessage.OPERATION_NOT_SUPPORTED_93.responseMessage, "Logged in user cannot modify itself!");
         }
 
+        Department department = departmentService.getDepartmentById(createAdminUserDto.getDepartmentId());
+
+        adminUser.setDepartment(department);
         adminUser.setUserRole(role);
 
         // save to db
@@ -225,7 +234,12 @@ public class UserServiceImpl implements UserService {
 
         //get role dto
         RoleDTO roleDTO = adminRoleService.getAdminRoleDTO(adminUser.getUserRole());
+
+        //get documentDTO
+        DepartmentDTO departmentDTO = departmentService.getDepartmentDTO(adminUser.getDepartment());
+
         adminUserDTO.setRole(roleDTO);
+        adminUserDTO.setDepartmentDTO(departmentDTO);
 
         return adminUserDTO;
     }
