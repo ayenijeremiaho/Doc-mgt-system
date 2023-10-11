@@ -16,6 +16,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("api/v1/users")
+@CrossOrigin(origins =  {"https://document-management.vercel.app/", "https://document-management.vercel.app", "http://127.0.0.1:5500/", "http://127.0.0.1:5500", "http://localhost:5500/"}, maxAge = 3600)
 public class UserController {
 
     private final UserService userService;
@@ -28,7 +29,7 @@ public class UserController {
         this.generalService = generalService;
     }
 
-    @PostMapping("sign-up")
+    @PostMapping("/sign-up")
     public Response signUp(@Valid @RequestBody CreateUpdateUserDTO signUpRequest) {
 
         String user = userService.getLoggedInUser();
@@ -37,7 +38,7 @@ public class UserController {
         return generalService.prepareResponse(ResponseCodeAndMessage.SUCCESSFUL_0, data);
     }
 
-    @PostMapping("sign-in")
+    @PostMapping("/sign-in")
     public ResponseEntity<Response> signIn(@RequestBody SignInRequest request) {
         Response data = userService.signIn(request.getUsername(), request.getPassword());
         if (data.getResponseCode().equals(ResponseCodeAndMessage.SUCCESSFUL_0.responseCode))
